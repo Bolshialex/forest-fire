@@ -40,6 +40,7 @@ public class Fire {
     public static int timeToBurn(char[][] forest, int matchR, int matchC) {
         // HINT: when adding to your BFS queue, you can include more information than
         // just a location. What other information might be useful?
+        if (forest[matchR][matchC] != 't') return 0;
         Queue<int[]> qu = new LinkedList<>();
         boolean[][] seen = new boolean[forest.length][forest[0].length];
         int time = 0;
@@ -50,7 +51,6 @@ public class Fire {
             int n = qu.size();
             
             for(int i = 0; i < n; i++){
-                System.out.println("n = " + n);
                 int[] cur = qu.poll();
                 seen[cur[0]][cur[1]] = true;
 
@@ -58,9 +58,7 @@ public class Fire {
                     qu.add(neighbor);
                 }
             }
-            System.out.println("Time before: " + time);
             time++;
-            System.out.println("Time After: " + time);
         }
 
         return time - 1;
