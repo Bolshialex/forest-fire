@@ -50,20 +50,23 @@ public class Fire {
             int n = qu.size();
             
             for(int i = 0; i < n; i++){
+                System.out.println("n = " + n);
                 int[] cur = qu.poll();
                 seen[cur[0]][cur[1]] = true;
-                for (int[] neighbor : possibleMoves(forest, cur[0], cur[1])) {
-                    if(!seen[cur[0]][cur[1]]) qu.add(neighbor);
+
+                for (int[] neighbor : possibleMoves(forest, cur[0], cur[1], seen)) {
+                    qu.add(neighbor);
                 }
-                time++;
             }
-            
+            System.out.println("Time before: " + time);
+            time++;
+            System.out.println("Time After: " + time);
         }
 
-        return time;
+        return time - 1;
     }
 
-    public static List<int[]> possibleMoves(char[][] forest, int matchR, int matchC) {
+    public static List<int[]> possibleMoves(char[][] forest, int matchR, int matchC, boolean[][] seen) {
         List<int[]> moves = new ArrayList<>();
 
         int[][] directions = {
@@ -79,7 +82,7 @@ public class Fire {
 
             if (newR >= 0 && newR < forest.length && 
                 newC >= 0 && newC < forest[newR].length && 
-                forest[newR][newC] == 't') {
+                forest[newR][newC] == 't' && !seen[newR][newC]) {
                     moves.add(new int[] {newR, newC});
             }
         }
